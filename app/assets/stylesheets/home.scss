@@ -1,3 +1,163 @@
-// Place all the styles related to the home controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+div {
+  border: 1px solid black;
+}
+
+.connected_menu .active {
+  background-color: #53b6fc;
+}
+
+.connected_menu button, .connected_menu a, .connected_menu span {
+  height: 100%;
+  background-color: #BAC4FF;
+  border: 1px solid black;
+  color: black;
+  cursor: pointer;
+  float: left;
+}
+
+.connected_menu button:first-child, .connected_menu a:first-child, .connected_menu span:first-child {
+  border-radius: 8px 0px 0px 8px;
+}
+
+.connected_menu button:last-child, .connected_menu a:last-child, .connected_menu span:last-child {
+  border-radius: 0px 8px 8px 0px;
+}
+
+.connected_menu button:not(:last-child), .connected_menu a:not(:last-child), .connected_menu span:not(:last-child) {
+  border-right: none;
+}
+
+#header_div div {
+  display: block;
+}
+
+#header_top_div div {
+  display: inline-block;
+}
+
+#title_div {
+  height: 80px;
+}
+
+#title_div h1 {
+  font-family: "Trebuchet MS";
+  font-size: 34px;
+}
+
+.cap {
+  font-family: "Verdana";
+  font-size: 40px;
+}
+
+#menu_search_div {
+  display: inline;
+  width: 195px;
+  height: 80px;
+  font-size: 24px;
+  float: right;
+}
+
+#menu_div {
+  height: 40px;
+}
+
+#search_div {
+  width: 90%;
+  margin: 10px 10px 5px 5px;
+}
+
+#search_div input {
+  width: 75%;
+  float: left;
+}
+
+#search_div button {
+  width: 20%;
+  float: right;
+}
+
+#search_div button img {
+  width: 100%;
+  height: 100%;
+}
+
+#sort_div {
+  width: 280px;
+  height: 20px;
+}
+
+#sort_span {
+  height: 100%;
+  padding: 10px 10px;
+}
+
+#sort_div div {
+  float: left;
+  display: inline;
+}
+
+#sort_buttons {
+  height: 100%;
+}
+
+#body_div {
+  display: grid;
+  overflow: scroll;
+  grid-template-columns: 1fr 300px;
+}
+
+#body_left_div {
+  display: grid;
+  overflow: hidden;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-gap: 1vw;
+  width: auto;
+  height: 100%;
+}
+
+#body_right_div {
+  height: 100%;
+  border: 1px solid red;
+  float: right;
+}
+
+#body_left_div span {
+  font-size: 16px;
+  margin: 0px 0px;
+}
+
+.media {
+  display: flex;
+  text-align: left;
+}
+
+.media img {
+  width: 100px;
+}
+
+.media_left {
+  flex: 1;
+}
+
+.media_right {
+  flex: 5;
+}
+
+.media_title {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.media_date {
+  font-size: 14px;
+}
+
+.starbar {
+  display: grid;
+  width: 125px;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+}
+
+.star {
+  width: 25px;
+}

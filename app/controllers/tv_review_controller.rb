@@ -1,0 +1,2 @@
+class TvReviewController < ApplicationController
+end
