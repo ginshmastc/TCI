@@ -51,7 +51,7 @@ div {
 
 #menu_search_div {
   display: inline;
-  width: 195px;
+  width: 200px;
   height: 80px;
   font-size: 24px;
   float: right;
@@ -73,6 +73,7 @@ div {
 
 #search_div button {
   width: 20%;
+  height: 100%;
   float: right;
 }
 
@@ -102,7 +103,6 @@ div {
 
 #body_div {
   display: grid;
-  overflow: scroll;
   grid-template-columns: 1fr 300px;
 }
 
@@ -150,14 +150,4 @@ div {
 
 .media_date {
   font-size: 14px;
-}
-
-.starbar {
-  display: grid;
-  width: 125px;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-}
-
-.star {
-  width: 25px;
 }

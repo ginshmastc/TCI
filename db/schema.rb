@@ -10,9 +10,64 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 2019_07_29_033236) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "genres", force: :cascade do |t|
+    t.string "tmdb_genre_id"
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "movie_categorizations", force: :cascade do |t|
+    t.integer "movie_id"
+    t.integer "genre_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "movie_reviews", force: :cascade do |t|
+    t.integer "movie_id"
+    t.integer "stars"
+    t.string "comment"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "email_address"
+  end
+
+  create_table "movies", force: :cascade do |t|
+    t.string "tmdb_movie_id"
+    t.string "title"
+    t.date "release_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "tv_categorizations", force: :cascade do |t|
+    t.integer "tv_id"
+    t.integer "genre_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "tv_reviews", force: :cascade do |t|
+    t.integer "tv_id"
+    t.integer "stars"
+    t.string "comment"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "email_address"
+  end
+
+  create_table "tvs", force: :cascade do |t|
+    t.string "tmdb_tv_id"
+    t.string "title"
+    t.date "air_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
 end

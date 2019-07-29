@@ -1,42 +1,42 @@
 
   <div id="master_div">
     <div id="header_div">
-	    <div id="header_top_div">
+        <div id="header_top_div">
         <div id="title_div">
           <h1><span class="cap">T</span>rusty <span class="cap">C</span>inematic <span class="cap">I</span>nquiry</h1>
         </div>
-		    <div id="menu_search_div">
-	        <div class="connected_menu" id="menu_div">
-            <button id="menu_0" class="active" onclick="menu(0);">Home</button>
-	          <button id="menu_1" onclick="menu(1);">TV</button>
-            <button id="menu_2" onclick="menu(2);">Movies</button>
-            <button id="menu_3" onclick="menu(3);">About</button>
-	        </div>
-		      <div id="search_div">
+            <div id="menu_search_div">
+            <div class="connected_menu" id="menu_div">
+              <button id="menu_0" class="active" onclick="menu(0);">Home</button>
+              <button id="menu_1" onclick="menu(1);">TV</button>
+              <button id="menu_2" onclick="menu(2);">Movies</button>
+              <button id="menu_3" onclick="menu(3);">About</button>
+            </div>
+              <div id="search_div">
 		        <input type="text"></input>
-			      <button id="search_button"><%= image_tag("mag_glass.png", size: "20") %></button>
+			    <button id="search_button"><%= image_tag("mag_glass.png", size: "20") %></button>
 		      </div>
-		    </div>
-	    </div>
-	    <div id="header_bottom_div">
+            </div>
+        </div>
+        <div id="header_bottom_div">
         <div id="sort_div">
           <div>
             <span id="sort_span">Sort By: </span>
           </div>
           <div id="sort_buttons" class="connected_menu">
-            <button id="sort_0" onclick="sort(0);">Title</button>
-            <button id="sort_1" onclick="sort(1);">Release Date</button>
-            <button id="sort_2" onclick="sort(2);">Genre</button>
+            <button id="sort_0" onclick="sort(0);" class=<%= if params[:sort] == "title" then "active" else "" end %>>Title</button>
+            <button id="sort_1" onclick="sort(1);" class=<%= if params[:sort] == "date" then "active" else "" end %>>Release Date</button>
+            <button id="sort_2" onclick="sort(2);" class=<%= if params[:sort] == "genre" then "active" else "" end %>>Genre</button>
           </div>
         </div>
-	    </div>
+        </div>
     </div>
-	  <div id="body_div">
+      <div id="body_div">
       <div id="body_left_div">
-	    
-	    </div>
-	    <div id="body_right_div">
-	    
-	    </div>
-	  </div>
+        
+        </div>
+        <div id="body_right_div">
+        
+        </div>
+      </div>
   </div>

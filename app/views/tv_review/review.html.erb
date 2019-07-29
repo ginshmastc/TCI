@@ -1,0 +1,96 @@
+
+<%
+  def avgrating(id)
+    @total = 0
+	@amount = 0
+	TvReview.where(tv_id: id).find_each do |r|
+	  @amount += 1
+	  @total += r.stars
+	end
+	if @amount == 0
+	  return 0
+	end
+	return (@total.to_f() / @amount.to_f()).round(1)
+  end
+%>
+
+  <div id="master_div">
+    <div id="header_div">
+	    <div id="header_top_div">
+        <div id="title_div">
+          <h1><span class="cap">T</span>rusty <span class="cap">C</span>inematic <span class="cap">I</span>nquiry</h1>
+        </div>
+		    <div id="menu_search_div">
+	          <div class="connected_menu" id="menu_div">
+                <button id="menu_0" onclick="menu(0);">Home</button>
+	            <button id="menu_1" class="active" onclick="menu(1);">TV</button>
+                <button id="menu_2" onclick="menu(2);">Movies</button>
+                <button id="menu_3" onclick="menu(3);">About</button>
+	          </div>
+		      <div id="search_div">
+		        <input type="text"></input>
+			    <button id="search_button"><%= image_tag("mag_glass.png", size: "20") %></button>
+		      </div>
+		    </div>
+	       </div>
+	      <div id="header_bottom_div">
+            
+	      </div>
+        </div>
+	    <div id="body_div">
+	      <div id="body_left_div">
+	        <div>
+			  <div style="position:relative; height: 75px; float: right;">
+				<%= image_tag("star_solid.png", size: "75") %>
+				<div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+				  <span style="color:white"><%= avgrating(@tv.id)%></span>
+				</div>
+			  </div>
+			<% if params[:error] == "email" %>
+			<span style="color:red;">Please enter a valid email address to add a review</span>
+			<% end %>
+	          <%= form_tag :action => 'create' do %>
+	          <input type="hidden" id="solid_path" value=<%= image_url('star_solid.png')%>>
+	          <input type="hidden" id="empty_path" value=<%= image_url('star_empty.png')%>>
+	          <input type="hidden" name="tmdb_id" id="tmdb_id" value=<%= @tv.tmdb_tv_id %>>
+              <h1 id="tv_title">
+              <%= if @tv 
+              @tv.title
+              end%>
+              </h1>
+			  <span>Email: <input type="text" id="email" name="email"></input></span><br><br>
+              <div id="sb0" class="starbar">
+                <%= image_tag("star_empty.png", id: "0star1", size: "25", onclick: "edit_bar(0,1);") %>
+                <%= image_tag("star_empty.png", id: "0star2", size: "25", onclick: "edit_bar(0,2);") %>
+                <%= image_tag("star_empty.png", id: "0star3", size: "25", onclick: "edit_bar(0,3);") %>
+                <%= image_tag("star_empty.png", id: "0star4", size: "25", onclick: "edit_bar(0,4);") %>
+                <%= image_tag("star_empty.png", id: "0star5", size: "25", onclick: "edit_bar(0,5);") %>
+              </div>
+              <input type="hidden" id="starfield" name="stars" value="0"></input>
+              <p><label for = "comment">Comment: </label><br/>
+              <textarea name="comment"></textarea></p>
+              <%= submit_tag "Add Review" %>
+              <% end -%>
+              </div><div></div>
+	          <%if @reviews %>
+	          <% @maxstars = 5 %>
+	          <% @reviews.each do |c| %>
+	            <div class="starbar">
+	              <% for x in 1..@maxstars %>
+	                <% if x <= c.stars %>
+	                  <%= image_tag("star_solid.png", size: "25") %>
+	                <% else %>
+	                  <%= image_tag("star_empty.png", size: "25") %>
+	                <% end %>
+	              <% end %>
+	            </div>
+	            <div>
+              <span><%= c.comment %></span>
+			  <span>-<%= c.email_address %></span>
+              </div>
+            <% end %>
+          <% end %>
+	      
+	    </div>
+	  </div>
+  </div>

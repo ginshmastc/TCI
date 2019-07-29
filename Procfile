@@ -1,1 +1,1 @@
-web: bundle exec rails server -e ${RACK_ENV:-development}
+web: bundle exec rails server

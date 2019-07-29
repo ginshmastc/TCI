@@ -1,3 +1,10 @@
-// Place all the styles related to the movie_review controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.starbar {
+  display: grid;
+  width: 125px;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+}
+
+.star {
+  width: 25px;
+}

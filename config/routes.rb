@@ -1,6 +1,21 @@
 Rails.application.routes.draw do
   root "home#index"
+  get "home/index"
   get "movie/details"
-  get "movie_reviews/reviews"
+  get "movie/list"
+  get "movie/show"
+  get "tv/details"
+  get "tv/list"
+  get "tv/show"
+  get "movie_review/review"
+  get "movie_review/list"
+  get "movie_review/show"
+  post "movie_review/create"
+  get "tv_review/review"
+  get "tv_review/list"
+  get "tv_review/show"
+  post "tv_review/create"
   
+  get "genre/list"
+  get "genre/show"
 end

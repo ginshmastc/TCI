@@ -1,0 +1,89 @@
+
+<%
+  def listgenres(id)
+    @genrestr = ""
+	@show = Tv.find(id)
+	TvCategorization.where(tv_id: @show.id).find_each do |g|
+	  @gid = g.genre_id
+	  @gdb = Genre.find(@gid)
+	  @genrestr += @gdb.name + ", "
+	end
+	return @genrestr.delete_suffix(", ")
+  end
+
+  def avgrating(id)
+    @total = 0
+	@amount = 0
+	TvReview.where(tv_id: id).find_each do |r|
+	  @amount += 1
+	  @total += r.stars
+	end
+	if @amount == 0
+	  return 0
+	end
+	return (@total.to_f() / @amount.to_f()).round(1)
+  end
+%>
+
+  <div id="master_div">
+    <div id="header_div">
+        <div id="header_top_div">
+        <div id="title_div">
+          <h1><span class="cap">T</span>rusty <span class="cap">C</span>inematic <span class="cap">I</span>nquiry</h1>
+        </div>
+            <div id="menu_search_div">
+            <div class="connected_menu" id="menu_div">
+            <button id="menu_0" onclick="menu(0);">Home</button>
+            <button id="menu_1" class="active" onclick="menu(1);">TV</button>
+            <button id="menu_2" onclick="menu(2);">Movies</button>
+            <button id="menu_3" onclick="menu(3);">About</button>
+            </div>
+              <div id="search_div">
+		        <input type="text"></input>
+			    <button id="search_button"><%= image_tag("mag_glass.png", size: "20") %></button>
+	          </div>
+            </div>
+        </div>
+        <div id="header_bottom_div">
+        <div id="sort_div">
+          <div>
+            <span id="sort_span">Sort By: </span>
+          </div>
+          <div id="sort_buttons" class="connected_menu">
+            <button id="sort_0" onclick="sort(0);" class=<%= if params[:sort] == "title" then "active" else "" end %>>Title</button>
+            <button id="sort_1" onclick="sort(1);" class=<%= if params[:sort] == "date" then "active" else "" end %>>Release Date</button>
+            <button id="sort_2" onclick="sort(2);" class=<%= if params[:sort] == "genre" then "active" else "" end %>>Genre</button>
+          </div>
+        </div>
+        </div>
+    </div>
+      <div id="body_div">
+	    <div id="body_left_div">
+          <% if @tvs.blank? %>
+		    <p>There are no tv shows currently added to our database, please add some by finding them on the home page!</p>
+		  <% else %>
+		    <% @tvs.each do |m| %>
+		      <div style="display: grid; grid-template-columns: 1fr 75px;">
+			    <div>
+			      <span class="media_title"><%= m.title %></span><br>
+			      <span>Air Date: <%= m.air_date %></span><br>
+			      <span>Genre: <%= listgenres(m.id) %></span><br>
+				  <% @clickstr = "redirectRoute('/tv/details', {'page':'details', 'isMovie': 'false', 'tmdb_id':'" + m.tmdb_tv_id + "', 'title':'" + m.title + "', 'date':'" + m.air_date.to_s() + "'});"%>
+				  <a href="#" onclick="<%= @clickstr %>">Details</a>
+				  <% @clickstr = "redirectRoute('/tv_review/review', {'page':'review', 'isMovie': 'false', 'tmdb_id':'" + m.tmdb_tv_id + "', 'title':'" + m.title + "', 'date':'" + m.air_date.to_s() + "'});"%>
+                  <a href="#" onclick="<%= @clickstr %>">Review</a>
+				</div>
+				<div style="position:relative; height: 75px;">
+				  <%= image_tag("star_solid.png", size: "75") %>
+				  <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+				    <span style="color:white"><%= avgrating(m.id)%></span>
+				  </div>
+				</div>
+			  </div>
+		    <% end %>
+		  <% end %>
+		</div>
+		<div id="body_right_div">
+		</div>
+      </div>
+  </div>

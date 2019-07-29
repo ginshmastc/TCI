@@ -1,0 +1,11 @@
+<h1><%= @movie.title %></h1>
+
+<p>
+   <strong>TMDB: </strong> <%= @movie.tmdb_movie_id %><br />
+   <strong>Release Date:</strong> <%= @movie.release_date %><br />
+   <strong>Genres:</strong> <br />
+</p>
+
+<hr />
+
+<%= link_to 'Back', {:action => 'list'} %>

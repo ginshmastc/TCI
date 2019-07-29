@@ -1,0 +1,12 @@
+<% if @genres.blank? %>
+<p>There are not any genres currently in the system.</p>
+<% else %>
+<p>These are the current genres in our system</p>
+
+<ul id = "genres">
+   <% @genres.each do |c| %>
+   <li><%= link_to c.name, {:action => 'show', :id => c.id} -%></li>
+   <% end %>
+</ul>
+
+<% end %>
