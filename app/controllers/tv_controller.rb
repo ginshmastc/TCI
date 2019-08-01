@@ -4,7 +4,7 @@ class TvController < ApplicationController
     @tv = Tv.find_by(tmdb_tv_id: params[:tmdb_id])
     
     if !@tv
-      @tv = Tv.new({tmdb_tv_id: params[:tmdb_id], title: URI::decode(params[:title]), release_date: params[:date]})
+      @tv = Tv.new({tmdb_tv_id: params[:tmdb_id], title: URI::decode(params[:title]), air_date: params[:date]})
       @tv.save
 	  addGenres(params[:genres].split(","))
     end
