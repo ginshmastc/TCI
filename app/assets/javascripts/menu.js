@@ -5,7 +5,8 @@ var sort_type;
 var HOME = 0;
 var TV = 1;
 var MOVIES = 2;
-var ABOUT = 3;
+var REVIEWS = 3;
+var ABOUT = 4;
 var TITLE = 0;
 var RELEASE = 1;
 var GENRE = 2;
@@ -31,11 +32,12 @@ function initialize() {
       i++;
 	}
   }
+
 }
 
 function menu(val) {
   menu_type = val;
-  var options = 4;
+  var options = 5;
   resetSort();
   for(var i = 0; i < options; i++)
 	document.getElementById("menu_"+i).className = "";
@@ -50,6 +52,9 @@ function menu(val) {
 	  break;
 	case MOVIES:
 	  redirectRoute("/movie/list", {"page": "list"});
+	  break;
+	case REVIEWS:
+	  redirectRoute("/movie_review/list", {"page": "reviewlist"});
 	  break;
 	case ABOUT:
 	  redirectRoute("/home/about");
@@ -94,19 +99,19 @@ function sort(val) {
   switch(menu_type) {
     case TITLE:
 	  if(!loc.includes("?"))
-		window.location.href = "home/index?sort=title";
+		window.location.href = "/?sort=title";
 	  else
 		window.location.href = loc + "&sort=title";
 	  break;
 	case RELEASE:
       if(!loc.includes("?"))
-		window.location.href = "home/index?sort=date";
+		window.location.href = "/?sort=date";
 	  else
 	    window.location.href = loc + "&sort=date";
 	  break;
 	case GENRE:
       if(!loc.includes("?"))
-		window.location.href = "home/index?sort=genre";
+		window.location.href = "/?sort=genre";
       else
 	    window.location.href = loc + "&sort=genre";
 	  break;
@@ -132,6 +137,7 @@ function edit_bar(index, value) {
   return
 }
 
-//ajax autofill searchbar
-//tv repliation
-//sort home page
+function search() {
+  var str = document.getElementById("search_text").value;
+  redirectRoute("/", {"search":str});
+}

@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   root "home#index"
   get "home/index"
+  get "home/about"
   get "movie/details"
   get "movie/list"
   get "movie/show"

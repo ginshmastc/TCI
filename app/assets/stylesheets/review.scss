@@ -1,0 +1,19 @@
+
+.starbar {
+  display: grid;
+  width: 125px;
+  max-height: 25px;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+}
+
+.star {
+  width: 25px;
+}
+
+#review_div {
+  border: 1px solid black;
+}
+
+.comment_div {
+  height: auto;
+}

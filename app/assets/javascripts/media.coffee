@@ -50,7 +50,6 @@ getDetails = ->
   return
 
 displayDetails = (json) ->
-displayDetails = (json) ->
   `var i`
   console.log json
   genres = json['genres']

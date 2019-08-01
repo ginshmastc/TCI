@@ -10,11 +10,12 @@
               <button id="menu_0" class="active" onclick="menu(0);">Home</button>
               <button id="menu_1" onclick="menu(1);">TV</button>
               <button id="menu_2" onclick="menu(2);">Movies</button>
-              <button id="menu_3" onclick="menu(3);">About</button>
+			  <button id="menu_3" onclick="menu(3);">Reviews</button>
+              <button id="menu_4" onclick="menu(4);">About</button>
             </div>
               <div id="search_div">
-		        <input type="text"></input>
-			    <button id="search_button"><%= image_tag("mag_glass.png", size: "20") %></button>
+		        <input id="search_text" type="text"></input>
+			    <button onclick="search();" id="search_button"><%= image_tag("mag_glass.png", size: "20") %></button>
 		      </div>
             </div>
         </div>
@@ -36,7 +37,97 @@
         
         </div>
         <div id="body_right_div">
-        
+          <span class="sidebar_category"><strong>Most Recent Movies:</strong></span><br>
+		    <% @recent = Movie.last(2).reverse %>
+		  	<% @recent.each do |m| %>
+		      <div style="display: grid; grid-template-columns: 1fr 75px;">
+			    <div>
+			      <span class="sidebar_title"><%= m.title %></span><br>
+			      <span>Release Date: <%= m.release_date %></span><br>
+			      <span>Genre: <%= listMovGenres(m.id) %></span><br>
+				  <% @clickstr = "redirectRoute('/movie/details', {'page':'details', 'isMovie': 'true', 'tmdb_id':'" + m.tmdb_movie_id + "', 'title':'" + m.title + "', 'date':'" + m.release_date.to_s() + "'});"%>
+				  <a href="#" onclick="<%= @clickstr %>">Details</a>
+				  <% @clickstr = "redirectRoute('/movie_review/review', {'page':'review', 'isMovie': 'true', 'tmdb_id':'" + m.tmdb_movie_id + "', 'title':'" + m.title + "', 'date':'" + m.release_date.to_s() + "'});"%>
+                  <a href="#" onclick="<%= @clickstr %>">Review</a>
+				</div>
+				<div style="position:relative; height: 75px;">
+				  <%= image_tag("star_solid.png", size: "75") %>
+				  <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+				    <span style="color:white"><%= avgMovRating(m.id)%></span>
+				  </div>
+				</div>
+			  </div><br>
+		    <% end %>
+		  
+		  <span class="sidebar_category"><strong>Most Recent Movie Reviews:</strong></span><br>
+		    <% @recent = MovieReview.last(2).reverse %>
+		  	<% @recent.each do |m| %>
+			<% @mov = Movie.find(m.movie_id) %>
+		      <div style="display: grid; grid-template-columns: 1fr 75px;">
+			    <div>
+			      <span class="sidebar_title"><%= @mov[:title] %></span><br>
+			      <% @maxstars = 5 %>
+	            <div class="starbar">
+	              <% for x in 1..@maxstars %>
+	                <% if x <= m.stars %>
+	                  <%= image_tag("star_solid.png", size: "25") %>
+	                <% else %>
+	                  <%= image_tag("star_empty.png", size: "25") %>
+	                <% end %>
+	              <% end %>
+	            </div>
+			      <span><%= m.comment %> -<%= m.email_address %></span><br>
+				  <% @clickstr = "redirectRoute('/movie_review/review', {'page':'review', 'isMovie': 'true', 'tmdb_id':'" + @mov.tmdb_movie_id + "', 'title':'" + @mov.title + "', 'date':'" + @mov.release_date.to_s() + "'});"%>
+				  <a href="#" onclick="<%= @clickstr %>">View</a>
+				</div>
+			  </div><br>
+		    <% end %>
+			
+			<span class="sidebar_category"><strong>Most Recent TV Shows:</strong></span><br>
+		    <% @recent = Tv.last(2).reverse %>
+		  	<% @recent.each do |m| %>
+		      <div style="display: grid; grid-template-columns: 1fr 75px;">
+			    <div>
+			      <span class="sidebar_title"><%= m.title %></span><br>
+			      <span>Air Date: <%= m.air_date %></span><br>
+			      <span>Genre: <%= listTvGenres(m.id) %></span><br>
+				  <% @clickstr = "redirectRoute('/tv/details', {'page':'details', 'isMovie': 'false', 'tmdb_id':'" + m.tmdb_tv_id + "', 'title':'" + m.title + "', 'date':'" + m.air_date.to_s() + "'});"%>
+				  <a href="#" onclick="<%= @clickstr %>">Details</a>
+				  <% @clickstr = "redirectRoute('/tv_review/review', {'page':'review', 'isMovie': 'false', 'tmdb_id':'" + m.tmdb_tv_id + "', 'title':'" + m.title + "', 'date':'" + m.air_date.to_s() + "'});"%>
+                  <a href="#" onclick="<%= @clickstr %>">Review</a>
+				</div>
+				<div style="position:relative; height: 75px;">
+				  <%= image_tag("star_solid.png", size: "75") %>
+				  <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+				    <span style="color:white"><%= avgTvRating(m.id)%></span>
+				  </div>
+				</div>
+			  </div><br>
+		    <% end %>
+			
+			<span class="sidebar_category"><strong>Most Recent TV Show Reviews:</strong></span><br>
+		    <% @recent = TvReview.last(2).reverse %>
+		  	<% @recent.each do |m| %>
+			<% @tv = Tv.find(m.tv_id) %>
+		      <div style="display: grid; grid-template-columns: 1fr 75px;">
+			    <div>
+			      <span class="sidebar_title"><%= @tv[:title] %></span><br>
+			      <% @maxstars = 5 %>
+	            <div class="starbar">
+	              <% for x in 1..@maxstars %>
+	                <% if x <= m.stars %>
+	                  <%= image_tag("star_solid.png", size: "25") %>
+	                <% else %>
+	                  <%= image_tag("star_empty.png", size: "25") %>
+	                <% end %>
+	              <% end %>
+	            </div>
+			      <span><%= m.comment %> -<%= m.email_address %></span><br>
+				  <% @clickstr = "redirectRoute('/tv_review/review', {'page':'review', 'isMovie': 'false', 'tmdb_id':'" + @tv.tmdb_tv_id + "', 'title':'" + @tv.title + "', 'date':'" + @tv.air_date.to_s() + "'});"%>
+				  <a href="#" onclick="<%= @clickstr %>">View</a>
+				</div>
+			  </div><br>
+		    <% end %>
         </div>
       </div>
   </div>

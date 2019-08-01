@@ -1,0 +1,53 @@
+  <div id="master_div">
+    <div id="header_div">
+        <div id="header_top_div">
+        <div id="title_div">
+          <h1><span class="cap">T</span>rusty <span class="cap">C</span>inematic <span class="cap">I</span>nquiry</h1>
+        </div>
+            <div id="menu_search_div">
+            <div class="connected_menu" id="menu_div">
+              <button id="menu_0" onclick="menu(0);">Home</button>
+              <button id="menu_1" onclick="menu(1);">TV</button>
+              <button id="menu_2" onclick="menu(2);">Movies</button>
+			  <button id="menu_3" onclick="menu(3);">Reviews</button>
+              <button id="menu_4" class="active" onclick="menu(4);">About</button>
+            </div>
+              <div id="search_div">
+		        <input id="search_text" type="text"></input>
+			    <button onclick="search();" id="search_button"><%= image_tag("mag_glass.png", size: "20") %></button>
+	          </div>
+            </div>
+        </div>
+        <div id="header_bottom_div">
+        <div id="sort_div">
+          <div>
+            <span id="sort_span">Sort By: </span>
+          </div>
+          <div id="sort_buttons" class="connected_menu">
+            <button id="sort_0" onclick="sort(0);" class=<%= if params[:sort] == "title" then "active" else "" end %>>Title</button>
+            <button id="sort_1" onclick="sort(1);" class=<%= if params[:sort] == "date" then "active" else "" end %>>Release Date</button>
+            <button id="sort_2" onclick="sort(2);" class=<%= if params[:sort] == "genre" then "active" else "" end %>>Genre</button>
+          </div>
+        </div>
+        </div>
+    </div>
+      <div id="body_div" style="position: relative; overflow: hidden;">
+	  <div>
+	  <br><span>
+	    The purpose of this site is to record reviews of movies and TV shows.
+		Movies and TV shows can be added to the local review database from
+		the home page which initially lists trending media from "The Movie
+		Database" (TMDB) and from the search bar which also queries the
+		TMDB database. A list of movies and TV shows inside the local review database
+		can be viewed on the Movies page and TV page respectively.  All reviews
+		can be seen on the Reviews page. Details of different media can be viewed
+		by clicking on a Details link and a review can be made by clicking a Review link.
+		</span>
+		</div>
+		<div>
+        <span style="position: absolute; bottom: 10px;">This product uses the TMDb API but is not endorsed or certified by TMDb. <br><br><%= image_tag("powered_by.png", size: "100x50") %></span>
+        </div>
+      </div>
+  </div>
+
+

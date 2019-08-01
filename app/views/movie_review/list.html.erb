@@ -1,12 +1,153 @@
-<% if @movie_reviews.blank? %>
-<p>There are not any reviews currently in the system.</p>
-<% else %>
-<p>These are the current reviews in our system</p>
 
-<ul id = "movie_reviews">
-   <% @movie_reviews.each do |c| %>
-   <li><%= link_to c.movie_id, {:action => 'show', :id => c.id} -%></li>
-   <% end %>
-</ul>
+  <div id="master_div">
+    <div id="header_div">
+        <div id="header_top_div">
+        <div id="title_div">
+          <h1><span class="cap">T</span>rusty <span class="cap">C</span>inematic <span class="cap">I</span>nquiry</h1>
+        </div>
+            <div id="menu_search_div">
+            <div class="connected_menu" id="menu_div">
+              <button id="menu_0" onclick="menu(0);">Home</button>
+              <button id="menu_1" onclick="menu(1);">TV</button>
+              <button id="menu_2" onclick="menu(2);">Movies</button>
+			  <button id="menu_3" class="active" onclick="menu(3);">Reviews</button>
+              <button id="menu_4" onclick="menu(4);">About</button>
+            </div>
+              <div id="search_div">
+		        <input id="search_text" type="text"></input>
+			    <button onclick="search();" id="search_button"><%= image_tag("mag_glass.png", size: "20") %></button>
+	          </div>
+            </div>
+        </div>
+        <div id="header_bottom_div">
+        <div id="sort_div">
+          <div>
+            <span id="sort_span">Sort By: </span>
+          </div>
+          <div id="sort_buttons" class="connected_menu">
+            <button id="sort_0" onclick="sort(0);" class=<%= if params[:sort] == "title" then "active" else "" end %>>Title</button>
+            <button id="sort_1" onclick="sort(1);" class=<%= if params[:sort] == "date" then "active" else "" end %>>Release Date</button>
+            <button id="sort_2" onclick="sort(2);" class=<%= if params[:sort] == "genre" then "active" else "" end %>>Genre</button>
+          </div>
+        </div>
+        </div>
+    </div>
+      <div id="body_div">
+	    <div id="body_left_div">
+		<h3>Movie Reviews:</h3>
+          <% if @movie_reviews.blank? %>
+		    <p>There are no movie reviews currently added to our database, please add some!</p>
+		  <% else %>
+		    <% @movie_reviews.each do |m| %>
+			<% @med = Movie.find(m.movie_id) %>
+		      <div style="display: grid; grid-template-columns: 1fr 75px;">
+			    <div>
+			      <span class="media_title"><%= @med.title %></span><br>
+				  <span><%= listMovGenres(@med.id) %></span><br>
+			      <span>Date: <%= m.created_at %></span><br>
+				  <% @maxstars = 5 %>
+	            <div class="starbar">
+	              <% for x in 1..@maxstars %>
+	                <% if x <= m.stars %>
+	                  <%= image_tag("star_solid.png", size: "25") %>
+	                <% else %>
+	                  <%= image_tag("star_empty.png", size: "25") %>
+	                <% end %>
+	              <% end %>
+				  </div>
+			      <span><%= m.comment %></span><br>
+				  <span>-<%= m.email_address %></span><br>
+				  <% @clickstr = "redirectRoute('/movie_review/review', {'page':'review', 'isMovie': 'true', 'tmdb_id':'" + @med.tmdb_movie_id + "', 'title':'" + @med.title + "', 'date':'" + @med.release_date.to_s() + "'});"%>
+				  <a href="#" onclick="<%= @clickstr %>">View</a>
+				</div>
+			  </div>
+		    <% end %>
+		  <% end %>
+		  <h3>TV Reviews:</h3>
 
-<% end %>
+          <% if @tv_reviews.blank? %>
+		    <p>There are no tv reviews currently added to our database, please add some!</p>
+		  <% else %>
+		    <% @tv_reviews.each do |m| %>
+			<% @med = Tv.find(m.tv_id) %>
+		      <div style="display: grid; grid-template-columns: 1fr 75px;">
+			    <div>
+			      <span class="media_title"><%= @med.title %></span><br>
+				  <span><%= listTvGenres(@med.id) %></span><br>
+			      <span>Date: <%= m.created_at %></span><br>
+				  <% @maxstars = 5 %>
+	            <div class="starbar">
+	              <% for x in 1..@maxstars %>
+	                <% if x <= m.stars %>
+	                  <%= image_tag("star_solid.png", size: "25") %>
+	                <% else %>
+	                  <%= image_tag("star_empty.png", size: "25") %>
+	                <% end %>
+	              <% end %>
+				  </div>
+			      <span><%= m.comment %></span><br>
+				  <span>-<%= m.email_address %></span><br>
+				  <% @clickstr = "redirectRoute('/tv_review/review', {'page':'review', 'isMovie': 'false', 'tmdb_id':'" + @med.tmdb_tv_id + "', 'title':'" + @med.title + "', 'date':'" + @med.air_date.to_s() + "'});"%>
+				  <a href="#" onclick="<%= @clickstr %>">View</a>
+				</div>
+			  </div>
+		    <% end %>
+		  <% end %>
+		</div>
+		<div id="body_right_div">
+		     <span class="sidebar_category">Most Recent Movie Reviews:</span><br>
+		    <% @recent = MovieReview.last(3).reverse %>
+		  	<% @recent.each do |m| %>
+			<% @med = Movie.find(m.movie_id) %>
+		      <div style="display: grid; grid-template-columns: 1fr 75px;">
+			    <div>
+				  <span class="sidebar_title"><%= @med.title %></span><br>
+				  <span><%= listMovGenres(@med.id) %></span><br>
+			      <span>Date: <%= m.created_at %></span><br>
+				  <% @maxstars = 5 %>
+	            <div class="starbar">
+	              <% for x in 1..@maxstars %>
+	                <% if x <= m.stars %>
+	                  <%= image_tag("star_solid.png", size: "25") %>
+	                <% else %>
+	                  <%= image_tag("star_empty.png", size: "25") %>
+	                <% end %>
+	              <% end %>
+				  </div>
+			      <span><%= m.comment %></span><br>
+				  <span>-<%= m.email_address %></span><br>
+				  <% @clickstr = "redirectRoute('/movie_review/review', {'page': 'review', 'isMovie': 'true', 'tmdb_id':'" + @med.tmdb_movie_id + "', 'title':'" + @med.title + "', 'date':'" + @med.release_date.to_s() + "'});"%>
+				  <a href="#" onclick="<%= @clickstr %>">View</a>
+				</div>
+			  </div><br>
+		    <% end %>
+			
+			<span class="sidebar_category">Most Recent Tv Reviews:</span><br>
+		    <% @recent = TvReview.last(3).reverse %>
+		  	<% @recent.each do |m| %>
+			<% @med = Tv.find(m.tv_id) %>
+		      <div style="display: grid; grid-template-columns: 1fr 75px;">
+			    <div>
+				  <span class="sidebar_title"><%= @med.title %></span><br>
+				  <span><%= listTvGenres(@med.id) %></span><br>
+			      <span>Date: <%= m.created_at %></span><br>
+				  <% @maxstars = 5 %>
+	            <div class="starbar">
+	              <% for x in 1..@maxstars %>
+	                <% if x <= m.stars %>
+	                  <%= image_tag("star_solid.png", size: "25") %>
+	                <% else %>
+	                  <%= image_tag("star_empty.png", size: "25") %>
+	                <% end %>
+	              <% end %>
+				  </div>
+			      <span><%= m.comment %></span><br>
+				  <span>-<%= m.email_address %></span><br>
+				  <% @clickstr = "redirectRoute('/tv_review/review', {'page': 'review', 'isMovie': 'false', 'tmdb_id':'" + @med.tmdb_tv_id + "', 'title':'" + @med.title + "', 'date':'" + @med.air_date.to_s() + "'});"%>
+				  <a href="#" onclick="<%= @clickstr %>">View</a>
+				</div>
+			  </div><br>
+		    <% end %>
+		</div>
+      </div>
+  </div>

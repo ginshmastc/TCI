@@ -34,7 +34,37 @@ class MovieReviewController < ApplicationController
   end
   
   def list
+    @sort = params[:sort]
     @movie_reviews = MovieReview.all
+	@tv_reviews = TvReview.all
+	
+	if @sort == "title"
+	  @movie_reviews = @movie_reviews.sort_by do |m|
+	    Movie.find(m.movie_id)[:title]
+	  end
+	  @tv_reviews = @tv_reviews.sort_by do |m|
+	    Tv.find(m.tv_id)[:title]
+	  end
+	end
+	
+	if @sort == "date"
+	  @movie_reviews = @movie_reviews.sort_by do |m|
+	    m.created_at
+	  end
+	  @tv_reviews = @tv_reviews.sort_by do |m|
+	    m.created_at
+	  end
+	end
+	
+	if @sort == "genre"
+	  @movie_reviews = @movie_reviews.sort_by do |m|
+	    Movie.genreval(Movie.find(m.movie_id)[:id])
+	  end
+	  @tv_reviews = @tv_reviews.sort_by do |m|
+	    Tv.genreval(Tv.find(m.tv_id)[:id])
+	  end
+	end
+	
   end
   
   def show

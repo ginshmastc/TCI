@@ -4,16 +4,18 @@ class TvController < ApplicationController
     @tv = Tv.find_by(tmdb_tv_id: params[:tmdb_id])
     
     if !@tv
-      @tv = Tv.new({tmdb_tv_id: params[:tmdb_id], title: URI::decode(params[:title]), air_date: params[:date]})
+      @tv = Tv.new({tmdb_tv_id: params[:tmdb_id], title: URI::decode(params[:title]), release_date: params[:date]})
       @tv.save
-	  
-	  @genrelist = params[:genres].split(",")
-	  @genrelist.each do |g|
-	    @genreid = Genre.find_by(tmdb_genre_id: g.to_i())
-		@tcat = TvCategorization.new({tv_id: @tv.id, genre_id: @genreid.id})
-		@tcat.save
-	  end
+	  addGenres(params[:genres].split(","))
     end
+  end
+  
+  def addGenres(genrelist)
+	genrelist.each do |g|
+	  @genreid = Genre.find_by(tmdb_genre_id: g.to_i())
+	  @mcat = TvCategorization.new({movie_id: @movie.id, genre_id: @genreid.id})
+	  @mcat.save
+	  end
   end
   
   def list

@@ -1,7 +1,3 @@
-div {
-  border: 1px solid black;
-}
-
 .connected_menu .active {
   background-color: #53b6fc;
 }
@@ -25,6 +21,10 @@ div {
 
 .connected_menu button:not(:last-child), .connected_menu a:not(:last-child), .connected_menu span:not(:last-child) {
   border-right: none;
+}
+
+#header_div {
+  border: 2px solid darkblue;
 }
 
 #header_div div {
@@ -51,7 +51,7 @@ div {
 
 #menu_search_div {
   display: inline;
-  width: 200px;
+  width: 300px;
   height: 80px;
   font-size: 24px;
   float: right;
@@ -67,12 +67,12 @@ div {
 }
 
 #search_div input {
-  width: 75%;
+  width: calc(100% - 40px);
   float: left;
 }
 
 #search_div button {
-  width: 20%;
+  width: 32px;
   height: 100%;
   float: right;
 }
@@ -111,13 +111,15 @@ div {
   overflow: hidden;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   grid-gap: 1vw;
+  border: 2px solid yellow;
   width: auto;
   height: 100%;
 }
 
 #body_right_div {
+  overflow: hidden;
   height: 100%;
-  border: 1px solid red;
+  border: 2px solid darkred;
   float: right;
 }
 
@@ -128,7 +130,9 @@ div {
 
 .media {
   display: flex;
+  overflow: hidden;
   text-align: left;
+  border: 1px solid yellow;
 }
 
 .media img {
@@ -137,10 +141,12 @@ div {
 
 .media_left {
   flex: 1;
+  border: 1px solid black;
 }
 
 .media_right {
   flex: 5;
+  border: 1px solid black;
 }
 
 .media_title {
@@ -150,4 +156,14 @@ div {
 
 .media_date {
   font-size: 14px;
+}
+
+.sidebar_category {
+  font-size: 20px;
+  color: darkgray;
+}
+
+.sidebar_title {
+  font-size: 16px;
+  font-weight: bold;
 }
