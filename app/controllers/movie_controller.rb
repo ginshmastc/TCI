@@ -10,7 +10,6 @@ class MovieController < ApplicationController
   end
   
   def addGenres(genrelist, id)
-    puts "add genreid " + id
 	genrelist.each do |g|
 	  @genreid = Genre.find_by(tmdb_genre_id: g.to_i())
 	  @mcat = MovieCategorization.new({movie_id: id, genre_id: @genreid.id})
