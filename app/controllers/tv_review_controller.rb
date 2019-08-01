@@ -3,7 +3,7 @@ class TvReviewController < ApplicationController
     @tv = Tv.find_by(tmdb_movie_id: params[:tmdb_id])
     
     if !@tv
-      @tv = Movie.new({tmdb_tv_id: params[:tmdb_id], title: URI::decode(params[:title]), air_date: params[:date]})
+      @tv = Tv.new({tmdb_tv_id: params[:tmdb_id], title: URI::decode(params[:title]), air_date: params[:date]})
       @tv.save
 	  @genrelist = params[:genres].split(",")
 	  @genrelist.each do |g|
