@@ -1,6 +1,6 @@
 class TvReviewController < ApplicationController
    def review
-    @tv = Tv.find_by(tmdb_movie_id: params[:tmdb_id])
+    @tv = Tv.find_by(tmdb_tv_id: params[:tmdb_id])
     
     if !@tv
       @tv = Tv.new({tmdb_tv_id: params[:tmdb_id], title: URI::decode(params[:title]), air_date: params[:date]})
