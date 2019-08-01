@@ -1,20 +1,18 @@
 class TvReviewController < ApplicationController
    def review
-    @tv = Tv.find_by(tmdb_tv_id: params[:tmdb_id])
+    @tv = Tv.find_by(tmdb_movie_id: params[:tmdb_id])
     
     if !@tv
-      @tv = Tv.new({tmdb_tv_id: params[:tmdb_id], title: URI::decode(params[:title]), air_date: params[:date]})
+      @tv = Movie.new({tmdb_tv_id: params[:tmdb_id], title: URI::decode(params[:title]), air_date: params[:date]})
       @tv.save
-	  
 	  @genrelist = params[:genres].split(",")
 	  @genrelist.each do |g|
-	    puts "genre " + g
 	    @genreid = Genre.find_by(tmdb_genre_id: g.to_i())
-		@tcat = TvCategorization.new({tv_id: @tv.id, genre_id: @genreid.id})
-		@tcat.save
+		@mcat = TvCategorization.new({tv_id: @tv.id, genre_id: @genreid.id})
+		@mcat.save
 	  end
     end
-	if @tv
+    if @movie
       @reviews = TvReview.where(:tv_id => @tv.id)
     end
   end
