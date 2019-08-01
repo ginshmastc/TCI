@@ -5,8 +5,10 @@ class TvReviewController < ApplicationController
     if !@tv
       @tv = Tv.new({tmdb_tv_id: params[:tmdb_id], title: URI::decode(params[:title]), air_date: params[:date]})
       @tv.save
+	  
 	  @genrelist = params[:genres].split(",")
 	  @genrelist.each do |g|
+	    puts "genre " + g
 	    @genreid = Genre.find_by(tmdb_genre_id: g.to_i())
 		@tcat = TvCategorization.new({tv_id: @tv.id, genre_id: @genreid.id})
 		@tcat.save
