@@ -13,7 +13,7 @@ class TvController < ApplicationController
   def addGenres(genrelist)
 	genrelist.each do |g|
 	  @genreid = Genre.find_by(tmdb_genre_id: g.to_i())
-	  @mcat = TvCategorization.new({movie_id: @movie.id, genre_id: @genreid.id})
+	  @mcat = TvCategorization.new({tv_id: @tv.id, genre_id: @genreid.id})
 	  @mcat.save
 	  end
   end
