@@ -26,10 +26,20 @@ class MovieFlowTest < ActionDispatch::IntegrationTest
   
   test "open review and add movie" do
     get '/movie_review/review', params: {page: "details", tmdb_id:"299537", title:"Captain Marvel", date:"2019-03-06", isMovie: true, genres:"12,878,28"}
-	
 	mov = Movie.find_by(tmdb_movie_id: 299537)
 	assert_equal("Captain Marvel", mov.title)
 	assert_equal("Adventure, Science Fiction, Action", listMovGenres(mov.id))
+	
+	get '/movie_review/review', params: {page: "details", tmdb_id:"465003", title:"The Red Sea Diving Resort", date:"2019-07-31", isMovie: true, genres:"28,18,36,53"}
+	mov = Movie.find_by(tmdb_movie_id: 465003)
+	assert_equal("The Red Sea Diving Resort", mov.title)
+	assert_equal("Action, Drama, History, Thriller", listMovGenres(mov.id))
+	
+	get '/movie_review/review', params: {page: "details", tmdb_id:"459992", title:"Long Shot", date:"2019-05-02", isMovie: true, genres:"35,10749"}
+	mov = Movie.find_by(tmdb_movie_id: 459992)
+	assert_equal("Long Shot", mov.title)
+	assert_equal("Comedy, Romance", listMovGenres(mov.id))
+	
 	
   end
   #post review (invalid email)
