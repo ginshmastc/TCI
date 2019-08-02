@@ -121,10 +121,11 @@ loadMedia = (json) ->
     genrelist = results[i]['genre_ids']
     genre_nums = ''
     j = 0
-    while j < genrelist.length
-      genre_nums += genrelist[j] + ','
-      j++
-    genre_nums = genre_nums.slice(0, -1)
+	if genrelist.left > 0
+      while j < genrelist.length
+        genre_nums += genrelist[j] + ','
+        j++
+      genre_nums = genre_nums.slice(0, -1)
     tmdb_id = results[i]['id']
     title = if results[i]['title'] then results[i]['title'] else results[i]['name']
     isMovie = if results[i]['first_air_date'] == undefined then true else false
