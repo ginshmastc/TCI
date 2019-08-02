@@ -12,7 +12,7 @@ class TvReviewController < ApplicationController
 		@mcat.save
 	  end
     end
-    if @movie
+    if @tv
       @reviews = TvReview.where(:tv_id => @tv.id)
     end
   end
