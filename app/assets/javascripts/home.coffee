@@ -121,7 +121,7 @@ loadMedia = (json) ->
     genrelist = results[i]['genre_ids']
     genre_nums = ''
     j = 0
-	if genrelist
+	if genrelist?
       while j < genrelist.length
         genre_nums += genrelist[j] + ','
         j++
