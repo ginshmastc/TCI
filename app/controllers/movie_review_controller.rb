@@ -18,7 +18,6 @@ class MovieReviewController < ApplicationController
   end
 
   def create
-  
 	@movie = Movie.find_by(tmdb_movie_id: params[:tmdb_id])
 	@email_regex = Regexp.new(/^([^@\s]+)@((?:[-a-z0-9]+.)+[a-z]{2,})$/)
     if params["email"] == "" || !@email_regex.match(params["email"])

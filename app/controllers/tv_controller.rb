@@ -38,7 +38,7 @@ class TvController < ApplicationController
 	
 	if @sort == "genre"
 	  @tvs = @tvs.sort_by do |m|
-	    Tv.genreval(m.id)
+	    m.genreval()
 	  end
 	end
   end

@@ -42,17 +42,67 @@ class MovieFlowTest < ActionDispatch::IntegrationTest
 	
 	
   end
-  #post review (invalid email)
-  #calc review avg
-  #list movie page?
   
+  test "open review and add review" do
   
-  test "open review and add movie" do
-    post '/movie_review/create', params: {tmdb_id:"299537", email:"thereviewer@reviews.com", stars:"4", comment: "Captain Marvel was good!"}
+    get '/movie_review/review', params: {page: "details", tmdb_id:"299537", title:"Captain Marvel", date:"2019-03-06", isMovie: true, genres:"12,878,28"}
+	get '/movie_review/review', params: {page: "details", tmdb_id:"465003", title:"The Red Sea Diving Resort", date:"2019-07-31", isMovie: true, genres:"28,18,36,53"}
+	get '/movie_review/review', params: {page: "details", tmdb_id:"459992", title:"Long Shot", date:"2019-05-02", isMovie: true, genres:"35,10749"}
+  
+    #invalid email addresses
+    post '/movie_review/create', params: {tmdb_id:"299537", email:"thereviewer", stars:"4", comment: "Captain Marvel was good!"}
+	assert_response :redirect
 	
+	post '/movie_review/create', params: {tmdb_id:"299537", email:"@reviews", stars:"4", comment: "Captain Marvel was good!"}
+	assert_response :redirect
+	
+	post '/movie_review/create', params: {tmdb_id:"299537", email:"thereviewer@reviews.", stars:"4", comment: "Captain Marvel was good!"}
+	assert_response :redirect
+	
+	#valid review
+	post '/movie_review/create', params: {tmdb_id:"299537", email:"thereviewer@reviews.com", stars:"4", comment: "Captain Marvel was good!"}
 	mov = Movie.find_by(tmdb_movie_id: 299537)
 	rev = MovieReview.find_by(movie_id: mov.id)
 	assert_equal("thereviewer@reviews.com", rev.email_address)
-	assert_equal("4", rev.stars)
+	assert_equal(4, rev.stars)
+	
+	#valid email for localhost domain
+	post '/movie_review/create', params: {tmdb_id:"465003", email:"thereviewer@reviews", stars:"2", comment: ""}
+	mov = Movie.find_by(tmdb_movie_id: 465003)
+	rev = MovieReview.find_by(movie_id: mov.id)
+	assert_equal("thereviewer@reviews", rev.email_address)
+	assert_equal(2, rev.stars)
+	
+	post '/movie_review/create', params: {tmdb_id:"459992", email:"thereviewer@reviews.com", stars:"5", comment: "Amazing!"}
+	mov = Movie.find_by(tmdb_movie_id: 459992)
+	rev = MovieReview.find_by(movie_id: mov.id)
+	assert_equal("thereviewer@reviews.com", rev.email_address)
+	assert_equal(5, rev.stars)
+	assert_equal("Amazing!", rev.comment)
+  end
+  
+  test "create and average reviews" do
+    get '/movie_review/review', params: {page: "details", tmdb_id:"299537", title:"Captain Marvel", date:"2019-03-06", isMovie: true, genres:"12,878,28"}
+	mov = Movie.find_by(tmdb_movie_id: 299537)
+	
+	post '/movie_review/create', params: {tmdb_id:"299537", email:"thereviewer@reviews.com", stars:"1", comment: "Captain Marvel was good!"}
+
+	assert_equal(1, avgMovRating(mov.id))
+	
+	post '/movie_review/create', params: {tmdb_id:"299537", email:"thereviewer@reviews.com", stars:"5", comment: "Captain Marvel was good!"}
+		
+	assert_equal(3, avgMovRating(mov.id))
+	
+	post '/movie_review/create', params: {tmdb_id:"299537", email:"thereviewer@reviews.com", stars:"3", comment: "Captain Marvel was good!"}
+
+	assert_equal(3, avgMovRating(mov.id))
+	
+	post '/movie_review/create', params: {tmdb_id:"299537", email:"thereviewer@reviews.com", stars:"4", comment: "Captain Marvel was good!"}
+
+	assert_equal(3.25, avgMovRating(mov.id))
+	
+	post '/movie_review/create', params: {tmdb_id:"299537", email:"thereviewer@reviews.com", stars:"2", comment: "Captain Marvel was good!"}
+
+	assert_equal(3, avgMovRating(mov.id))
   end
 end

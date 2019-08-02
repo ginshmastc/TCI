@@ -38,7 +38,7 @@ class MovieController < ApplicationController
 	
 	if @sort == "genre"
 	  @movies = @movies.sort_by do |m|
-	    Movie.genreval(m.id)
+	    m.genreval()
 	  end
 	end
   end

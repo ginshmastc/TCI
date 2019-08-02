@@ -1,0 +1,31 @@
+require 'test_helper'
+ 
+class TvTest < ActiveSupport::TestCase
+
+  test "add shows with genres" do
+    TV.new({tmdb_movie_id: "41234", title: "Test Show 1", release_date: "2019-11-28"}).save
+	Movie.new({tmdb_movie_id: "13284", title: "Test Show 2", release_date: "2019-01-01"}).save
+	Movie.new({tmdb_tv_id: "63465", title: "Test Show 3", release_date: "2019-02-14"}).save
+	Movie.new({tmdb_tv_id: "65437", title: "Test Show 4", release_date: "2018-09-02"}).save
+	Tv.new({tmdb_tv_id: "56976", title: "Test Show 5", release_date: "2019-02-23"}).save
+	Tv.new({tmdb_tv_id: "82865", title: "Test Show 6", release_date: "2019-11-11"}).save
+	Tv.new({tmdb_tv_id: "63265", title: "Test Show 7", release_date: "2019-05-27"}).save
+	Tv.new({tmdb_tv_id: "65932", title: "Test Show 8", release_date: "2019-07-04"}).save
+	Tv.new({tmdb_tv_id: "65348", title: "Test Show 9", release_date: "2017-07-09"}).save
+	tv = Tv.new({tmdb_tv_id: "59876", title: "Test Show 10", release_date: "2019-12-25"})
+	
+	tv.save
+	tv.addGenres([16, 35])
+	
+	@list = Tv.all
+    assert_equal(10, @list.length)
+	assert_equal("Test Show 7", @list[6].title)
+	assert_equal("65437", @list[3].tmdb_tv_id)
+	assert_equal(Date.parse("2017-07-09"), @list[8].release_date)
+	assert_equal(4, tv.genreval())#4 is index of genre in our db, not the tmdb genre id given earlier
+	
+	tv = Tv.new
+	assert_not tv.save, "Saved without parameters"
+  end
+
+end

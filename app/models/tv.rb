@@ -5,7 +5,15 @@ class Tv < ApplicationRecord
   validates :air_date, presence: true
   validates :tmdb_tv_id, presence: true
 
-  def self.genreval(id)
-    return TvCategorization.find_by(tv_id: id).genre_id
+  def genreval()
+    return TvCategorization.find_by(tv_id: self.id).genre_id
+  end
+  
+  def addGenres(genrelist)
+	genrelist.each do |g|
+	  @genreid = Genre.find_by(tmdb_genre_id: g.to_i())
+	  @mcat = TvCategorization.new({tv_id: self.id, genre_id: @genreid.id})
+	  @mcat.save
+	end
   end
 end
