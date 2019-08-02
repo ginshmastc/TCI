@@ -162,14 +162,14 @@ displayMedia = ->
   return
 
 sort = (arr) ->
-  `var i`
+  i = 0
   if arr.length <= 1
     return arr
   l1 = Math.ceil(arr.length / 2)
   l2 = arr.length - l1
   arr1 = []
   arr2 = []
-  i = 0
+
   while i < arr.length
     if i < l1
       arr1[i] = arr[i]
