@@ -121,7 +121,7 @@ loadMedia = (json) ->
     genrelist = results[i]['genre_ids']
     genre_nums = ''
     j = 0
-    while j < genrelist.length
+    while genrelist? && j < genrelist.length
       genre_nums += genrelist[j] + ','
       j++
     genre_nums = genre_nums.slice(0, -1)
