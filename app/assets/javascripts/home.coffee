@@ -121,11 +121,10 @@ loadMedia = (json) ->
     genrelist = results[i]['genre_ids']
     genre_nums = ''
     j = 0
-	if genrelist?
-      while j < genrelist.length
-        genre_nums += genrelist[j] + ','
-        j++
-      genre_nums = genre_nums.slice(0, -1)
+    while j < genrelist.length
+      genre_nums += genrelist[j] + ','
+      j++
+    genre_nums = genre_nums.slice(0, -1)
     tmdb_id = results[i]['id']
     title = if results[i]['title'] then results[i]['title'] else results[i]['name']
     isMovie = if results[i]['first_air_date'] == undefined then true else false
@@ -163,14 +162,14 @@ displayMedia = ->
   return
 
 sort = (arr) ->
-  i = 0
+  `var i`
   if arr.length <= 1
     return arr
   l1 = Math.ceil(arr.length / 2)
   l2 = arr.length - l1
   arr1 = []
   arr2 = []
-
+  i = 0
   while i < arr.length
     if i < l1
       arr1[i] = arr[i]
